@@ -44,13 +44,13 @@ export const PublicNavbar = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="/auth/signin"> Iniciar Sesión </Link>
-        </NavbarItem>
         <NavbarItem>
-          <Button as={ Link } color="primary" href="/auth/signup" variant="flat">
-            Registrarse
+          <Button as={ Link } color="primary" href="/auth/signin" variant="flat">
+            Iniciar Sesión
           </Button>
+        </NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <Link href="/auth/signup"> Regístrate </Link>
         </NavbarItem>
       </NavbarContent>
     </Navbar>

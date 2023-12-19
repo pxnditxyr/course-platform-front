@@ -1,2 +1,2 @@
-export * from './ui/navbars'
-export * from './ui/modals'
+export * from './ui'
+export * from './icons'

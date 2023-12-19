@@ -8,14 +8,6 @@ export const SignupPage = () => {
   const [ isVisible, setIsVisible ] = useState( false )
   const toggleVisibility = () => setIsVisible( !isVisible )
 
-// Correo electrónico:
-// Documento de Identidad:
-// Nombre: *
-// Nombres
-// Apellido paterno: *
-// Apellido paterno
-// Apellido materno: *
-
   return (
     <AuthLayout title="Registrarse">
       <div className="flex flex-col items-center gap-8 py-8">
