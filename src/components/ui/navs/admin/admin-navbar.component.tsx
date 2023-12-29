@@ -1,4 +1,4 @@
-import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react"
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react"
 import { useAuthStore } from '../../../../stores'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from "react"
@@ -44,14 +44,18 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
   const location = useLocation()
 
   return (
-    <Navbar onMenuOpenChange={ setIsMenuOpen } maxWidth="full">
+    <Navbar
+      onMenuOpenChange={ setIsMenuOpen }
+      maxWidth="full"
+      isMenuOpen={ isMenuOpen }
+    >
       <NavbarContent>
         <NavbarMenuToggle
-          aria-label={ isMenuOpen ? "Close menu" : "Open menu" }
+          aria-label={ isMenuOpen ? "Cerrar Menu" : "Abrir Menu" }
           className="sm:hidden"
         />
         <NavbarBrand>
-          <p className="font-bold text-inherit"> { title } </p>
+          <p className="font-bold text-inherit"> { title || 'Admin' } </p>
         </NavbarBrand>
       </NavbarContent>
 
@@ -72,7 +76,7 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
                             key={ `${ subitem.title }-${ subindex }` }
                             onClick={ () => navigate( subitem.link || "#" ) }
                           >
-                            <p className={ `${ subitem.link === location.pathname ? 'text-secondary-500 font-semibold' : 'text-inherit' }` } > { subitem.title } </p>
+                            <p className={ `${ subitem.link === location.pathname ? 'text-secondary-500 font-semibold' : 'text-inherit' }` } > { subitem.title || '' } </p>
                           </DropdownItem>
                         ) )
                       }
@@ -83,7 +87,7 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
                     to={ item.link || '#' }
                     className={ `rounded-md p-2 ${ item.link === location.pathname ? 'text-secondary-500 font-semibold' : 'text-inherit' }` }
                   >
-                    { item.title }
+                    { item.title || '' }
                   </Link>
                 )
               }
@@ -126,9 +130,7 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
               ( item.isDropdown && item.subItems ) ? (
                 <Dropdown placement="bottom-start">
                   <DropdownTrigger className={ `cursor-pointer border border-transparent hover:border-secondary-500 rounded-md p-2 ${ item.subItems.some( subitem => subitem.link === location.pathname ) ? 'border-secondary-500' : '' }` }>
-                    <p
-                      className={ `${ item.subItems.some( subitem => subitem.link === location.pathname ) ? 'text-secondary-500 font-semibold' : 'text-inherit' }` }
-                    > { item.title } ▼ </p>
+                    <p className={ `${ item.subItems.some( subitem => subitem.link === location.pathname ) ? 'text-secondary-500 font-semibold' : 'text-inherit' }` }> { item.title } ▼ </p>
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Profile Actions" variant="flat">
                     {

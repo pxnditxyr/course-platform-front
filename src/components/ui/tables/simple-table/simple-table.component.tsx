@@ -13,6 +13,7 @@ import {
 
 import { Key, useCallback } from 'react'
 import { DeleteIcon, EditIcon, EyeIcon } from '../../..'
+import { serializeDate } from '../../../../utils'
 
 const statusColorMap: Record<string, ChipProps['color']>  = {
   active:   'success',
@@ -36,13 +37,6 @@ interface ICrudTableProps {
   onEditClick?:    ( id : string ) => void
   onDeleteClick?:  ( id : string ) => void
   showViewButton?: boolean
-}
-
-const serializeDate = ( date: string ) => {
-  const dateTime = new Date( date )
-  const dateString = dateTime.toLocaleDateString( 'es-AR' )
-  const timeString = dateTime.toLocaleTimeString( 'es-AR' )
-  return `${ dateString } ${ timeString }`
 }
 
 export const SimpleCrudTable = ( { columns, data, onEditClick, onViewClick, onDeleteClick, showViewButton = true } : ICrudTableProps ) => {
@@ -112,7 +106,7 @@ export const SimpleCrudTable = ( { columns, data, onEditClick, onViewClick, onDe
   }, [] )
 
   return (
-  <Table aria-label="Tabla de datos">
+    <Table aria-label="Tabla de datos" className="max-w-4xl">
       <TableHeader columns={ columns }>
         { ( column ) => (
           <TableColumn key={ column.uid } align={ column.uid === "actions" ? "center" : "start" } className="px-8 py-4">

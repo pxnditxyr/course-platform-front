@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { DashboardPage, ListParametersPage } from '../pages'
+import { CreateParameterPage, DashboardPage, ListParametersPage, UpdateParameterPage, ViewParameterPage } from '../pages'
 import { AdminLayout } from '../layout'
+import { CreateSubparameterPage, ListSubparametersPage, UpdateSubparameterPage, ViewSubparameterPage } from '../pages/subparameters'
 
 export const AdminRoutes = () => {
   return (
@@ -12,9 +13,19 @@ export const AdminRoutes = () => {
             <>
               <Routes>
                 <Route path="/" element={ <ListParametersPage /> } />
-                <Route path="create" element={ <h1> Create </h1> } />
-                <Route path="view/:id" element={ <h1> View </h1> } />
-                <Route path="edit/:id" element={ <h1> Edit </h1> } />
+                <Route path="create" element={ <CreateParameterPage /> } />
+                <Route path="view/:id" element={ <ViewParameterPage /> } />
+                <Route path="edit/:id" element={ <UpdateParameterPage /> } />
+              </Routes>
+            </>
+          } />
+          <Route path="subparameters/*" element={
+            <>
+              <Routes>
+                <Route path="/" element={ <ListSubparametersPage /> } />
+                <Route path="create" element={ <CreateSubparameterPage /> } />
+                <Route path="view/:id" element={ <ViewSubparameterPage /> } />
+                <Route path="edit/:id" element={ <UpdateSubparameterPage /> } />
               </Routes>
             </>
           } />

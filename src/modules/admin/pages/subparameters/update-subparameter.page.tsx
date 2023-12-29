@@ -1,36 +1,45 @@
 import { FormEvent, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Select, SelectItem } from '@nextui-org/react'
 
 import Swal from 'sweetalert2'
 
-import { useParametersStore } from '../../../../stores'
+import { useParametersStore, useSubparametersStore } from '../../../../stores'
 import { LoadingPage, UnexpectedErrorPage } from '../../../../components'
 
-export const UpdateParameterPage = () => {
+export const UpdateSubparameterPage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
-  const update = useParametersStore( state => state.update )
-  const parameters = useParametersStore( state => state.parameters )
+  const update = useSubparametersStore( state => state.update )
+  const subparameters = useSubparametersStore( state => state.subparameters )
 
-  const parameter = parameters.find( parameter => parameter.id === id )
-
-  if ( !parameter ) return (
+  const subparameter = subparameters.find( subparameter => subparameter.id === id )
+  if ( !subparameter ) return (
     <UnexpectedErrorPage
       title="Parametro no encontrado"
       message="El parametro que estas buscando no existe"
     />
   )
 
-  const isLoading = useParametersStore( state => state.isLoading )
-  const error = useParametersStore( state => state.error )
-  const clearError = useParametersStore( state => state.clearError )
+  const parameters = useParametersStore( state => state.parameters )
+  const findAllParameters = useParametersStore( state => state.findAll )
+  useEffect( () => {
+    findAllParameters()
+  }, [] )
+
+  const isLoading = useSubparametersStore( state => state.isLoading )
+  const error = useSubparametersStore( state => state.error )
+  const clearError = useSubparametersStore( state => state.clearError )
 
 
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
-    const { parameterName, details } = event.target as HTMLFormElement
-    await update( id, { name: parameterName.value, details: details.value })
+    const { subparameterName, details, parameterId } = event.target as HTMLFormElement
+    await update( id, {
+      name: subparameterName.value,
+      details: details.value,
+      parameterId: parameterId.value
+    })
     Swal.fire({
       title: 'Exito!',
       text: 'El parametro se ha actualizado correctamente',
@@ -64,16 +73,29 @@ export const UpdateParameterPage = () => {
             type="text"
             label="Nombre"
             variant="bordered"
-            name="parameterName"
-            defaultValue={ parameter.name }
+            name="subparameterName"
+            defaultValue={ subparameter.name }
           />
           <Input
             type="text"
             label="Detalles"
             variant="bordered"
             name="details"
-            defaultValue={ parameter.details }
+            defaultValue={ subparameter.details }
           />
+          <Select
+            isRequired
+            label="Parametro"
+            placeholder="Seleccione un parametro"
+            name="parameterId"
+            defaultSelectedKeys={[ subparameter.parameterId ]}
+          >
+            { parameters.filter( p => p.status ).map( ( parameter ) => (
+              <SelectItem key={ parameter.id } value={ parameter.id }>
+                { parameter.name }
+              </SelectItem>
+            ) ) }
+          </Select>
           <Button color="primary" variant="shadow" type="submit">
             Actualizar
           </Button>

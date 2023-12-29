@@ -13,6 +13,7 @@ export const SigninPage = () => {
   const authError = useAuthStore( state => state.error )
   const clearError = useAuthStore( state => state.clearError )
   const { isOpenModal, onOpenModal, onCloseModal } = useModal({ onCloseCallback: clearError })
+
   const onSubmit = ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { email, password } = event.target as HTMLFormElement

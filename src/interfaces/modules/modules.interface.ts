@@ -7,9 +7,9 @@ export interface IUser {
   role: string
   password: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -27,9 +27,9 @@ export interface ICourse {
   endDate: Date
   imageUrl?: string | null
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
   
   creator?: IUser | null
@@ -45,9 +45,9 @@ export interface ICategory {
   details: string
   imageUrl?: string | null
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -61,9 +61,9 @@ export interface ITakenCourse {
   userId: string
   courseId: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -79,9 +79,9 @@ export interface IBilling {
   nit: string
   reason: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   user?: IUser | null
@@ -95,9 +95,9 @@ export interface IDocument {
   url: string
   documentTypeId: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -113,9 +113,9 @@ export interface ISubparameter {
   details: string
   parameterId: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -128,9 +128,9 @@ export interface IParameter {
   name: string
   details: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -144,9 +144,9 @@ export interface ITakenCourse {
   userId: string
   courseId: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -161,9 +161,9 @@ export interface IAdvertising {
   name: string
   description: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -179,9 +179,9 @@ export interface IProgramDetail {
   registrationConditionId: string
   howToFindOutId: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
@@ -202,9 +202,9 @@ export interface IContactInfo {
   city: string
   address: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   user?: IUser | null
@@ -220,9 +220,9 @@ export interface IPersonalInfo {
   birthDate: Date
   nationality: string
   status: boolean
-  createdAt: Date
+  createdAt: string
   createdBy?: string | null
-  updatedAt: Date
+  updatedAt: string
   updatedBy?: string | null
 
   creator?: IUser | null
