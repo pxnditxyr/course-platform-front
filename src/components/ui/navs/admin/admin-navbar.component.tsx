@@ -1,7 +1,8 @@
-import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react"
-import { useAuthStore } from '../../../../stores'
+import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useState } from "react"
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react"
+
+import { useAuthStore } from '../../../../stores'
 
 interface IMenuItem {
   title: string
@@ -29,6 +30,20 @@ const menuData : IMenuItem[] = [
       },
     ]
   },
+  {
+    title: 'Cursos',
+    isDropdown: true,
+    subItems: [
+      {
+        title: 'Categorias',
+        link: '/categories',
+      },
+      {
+        title: 'Cursos',
+        link: '/courses',
+      },
+    ]
+  }
 ]
 
 interface IAdminNavbarProps {

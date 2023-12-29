@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useParametersStore } from '../../../../stores'
-import { LoadingPage, SimpleCrudTable } from '../../../../components'
+import { useCategoriesStore } from '../../../../stores'
+import { AvatarCrudTable, LoadingPage } from '../../../../components'
 import Swal from 'sweetalert2'
 
 const columns = [
@@ -12,18 +12,18 @@ const columns = [
   { name: 'Acciones', uid: 'actions' }
 ]
 
-export const ListParametersPage = () => {
+export const ListCategoriesPage = () => {
 
-  const parameters = useParametersStore( state => state.parameters )
-  const findAllParameters = useParametersStore( state => state.findAll )
-  const isLoading = useParametersStore( state => state.isLoading )
-  const toggleStatus = useParametersStore( state => state.toggleStatus )
-  const error = useParametersStore( state => state.error )
-  const clearError = useParametersStore( state => state.clearError )
+  const categories = useCategoriesStore( state => state.categories )
+  const findAllCategories = useCategoriesStore( state => state.findAll )
+  const isLoading = useCategoriesStore( state => state.isLoading )
+  const toggleStatus = useCategoriesStore( state => state.toggleStatus )
+  const error = useCategoriesStore( state => state.error )
+  const clearError = useCategoriesStore( state => state.clearError )
   const navigate = useNavigate()
 
   useEffect( () => {
-    findAllParameters()
+    findAllCategories()
   }, [] )
 
   useEffect( () => {
@@ -40,23 +40,23 @@ export const ListParametersPage = () => {
 
   if ( isLoading ) return ( <LoadingPage /> )
 
-  const onViewClick   = ( id: string ) => navigate( `/parameters/view/${ btoa( id ) }` )
-  const onCreateClick = () => navigate( '/parameters/create')
-  const onEditClick   = ( id: string ) => navigate( `/parameters/edit/${ btoa( id ) }` )
+  const onViewClick   = ( id: string ) => navigate( `/categories/view/${ btoa( id ) }` )
+  const onCreateClick = () => navigate( '/categories/create')
+  const onEditClick   = ( id: string ) => navigate( `/categories/edit/${ btoa( id ) }` )
   const onDeleteClick = ( id: string ) => toggleStatus( id )
 
   return (
     <div className="flex flex-col items-center gap-8 py-2 px-8 mb-8">
-      <h1 className="text-3xl font-bold"> Parametros </h1>
+      <h1 className="text-3xl font-bold"> Categorias </h1>
       <div className="flex justify-end gap-4 w-full max-w-4xl">
         <button
           onClick={ onCreateClick }
           className="py-2 px-4 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 transition duration-500"
-        > Crear Parametro </button>
+        > Crear Categoria </button>
       </div>
-      <SimpleCrudTable
+      <AvatarCrudTable
         columns={ columns }
-        data={ parameters }
+        data={ categories }
         onEditClick={ onEditClick }
         onDeleteClick={ onDeleteClick }
         onViewClick={ onViewClick }

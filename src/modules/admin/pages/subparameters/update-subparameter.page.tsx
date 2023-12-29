@@ -16,8 +16,8 @@ export const UpdateSubparameterPage = () => {
   const subparameter = subparameters.find( subparameter => subparameter.id === id )
   if ( !subparameter ) return (
     <UnexpectedErrorPage
-      title="Parametro no encontrado"
-      message="El parametro que estas buscando no existe"
+      title="Subparametro no encontrado"
+      message="El subparametro que estas buscando no existe"
     />
   )
 
@@ -42,7 +42,7 @@ export const UpdateSubparameterPage = () => {
     })
     Swal.fire({
       title: 'Exito!',
-      text: 'El parametro se ha actualizado correctamente',
+      text: 'El subparametro se ha actualizado correctamente',
       icon: 'success',
       confirmButtonText: 'Ok'
     })
@@ -63,7 +63,7 @@ export const UpdateSubparameterPage = () => {
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">
-      <h1 className="text-3xl font-bold"> Actualizar Parametro </h1>
+      <h1 className="text-3xl font-bold"> Actualizar Subparametro </h1>
       <div className="flex flex-col gap-4 w-full items-center">
         <form
           className="flex flex-col gap-8 w-full max-w-lg"

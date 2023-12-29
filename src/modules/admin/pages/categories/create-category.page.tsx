@@ -1,23 +1,27 @@
 import { FormEvent, useEffect } from 'react'
-import { useParametersStore } from '../../../../stores'
+import { useCategoriesStore } from '../../../../stores'
 import Swal from 'sweetalert2'
 import { Button, Input } from '@nextui-org/react'
 import { LoadingPage } from '../../../../components'
 
-export const CreateParameterPage = () => {
+export const CreateCategoryPage = () => {
 
-  const create = useParametersStore( state => state.create )
-  const isLoading = useParametersStore( state => state.isLoading )
-  const error = useParametersStore( state => state.error )
-  const clearError = useParametersStore( state => state.clearError )
+  const create = useCategoriesStore( state => state.create )
+  const isLoading = useCategoriesStore( state => state.isLoading )
+  const error = useCategoriesStore( state => state.error )
+  const clearError = useCategoriesStore( state => state.clearError )
 
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
-    const { parameterName, details } = event.target as HTMLFormElement
-    await create({ name: parameterName.value, details: details.value })
+    const { categoryName, details, imageUrl } = event.target as HTMLFormElement
+    await create({
+      name: categoryName.value,
+      details: details.value,
+      imageUrl: imageUrl.value
+    })
     Swal.fire({
       title: 'Exito!',
-      text: 'El parametro se ha creado correctamente',
+      text: 'La categoria se ha creado correctamente',
       icon: 'success',
       confirmButtonText: 'Ok'
     })
@@ -39,7 +43,7 @@ export const CreateParameterPage = () => {
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">
-      <h1 className="text-3xl font-bold"> Crear Parametro </h1>
+      <h1 className="text-3xl font-bold"> Crear Categoria </h1>
       <div className="flex flex-col gap-4 w-full items-center">
         <form
           className="flex flex-col gap-8 w-full max-w-lg"
@@ -49,14 +53,25 @@ export const CreateParameterPage = () => {
             type="text"
             label="Nombre"
             variant="bordered"
-            name="parameterName"
-
+            name="categoryName"
           />
           <Input
             type="text"
             label="Detalles"
             variant="bordered"
             name="details"
+          />
+          {/* <Input */}
+          {/*   type="file" */}
+          {/*   // label="Imagen" */}
+          {/*   variant="bordered" */}
+          {/*   name="image" */}
+          {/* /> */}
+          <Input
+            type="text"
+            label="Url de la imagen"
+            variant="bordered"
+            name="imageUrl"
           />
           <Button color="primary" variant="shadow" type="submit">
             Crear
