@@ -14,7 +14,8 @@ export const CreateParameterPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { parameterName, details } = event.target as HTMLFormElement
-    await create({ name: parameterName.value, details: details.value })
+    const isCreated = await create({ name: parameterName.value, details: details.value })
+    if ( !isCreated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'El parametro se ha creado correctamente',

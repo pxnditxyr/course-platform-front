@@ -50,10 +50,10 @@ export const AvatarCrudTable = ( { columns, data, onEditClick, onViewClick, onDe
         return (
            <User
             avatarProps={{ radius: "lg", src: data.imageUrl }}
-            description={ data.details }
+            description={ data.details || data.email }
             name={ data.name }
           >
-            { data.details }
+            { data.details || data.email }
           </User>
         )
       case 'status':

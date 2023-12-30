@@ -14,11 +14,12 @@ export const CreateCategoryPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { categoryName, details, imageUrl } = event.target as HTMLFormElement
-    await create({
+    const isCreated = await create({
       name: categoryName.value,
       details: details.value,
       imageUrl: imageUrl.value
     })
+    if ( !isCreated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'La categoria se ha creado correctamente',

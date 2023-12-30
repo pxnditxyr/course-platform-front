@@ -47,7 +47,7 @@ export const UpdateCoursePage = () => {
       city, version,
       startDate, endDate
     } = event.target as HTMLFormElement
-    await update( id, {
+    const isUpdated = await update( id, {
       name: courseName.value,
       details: details.value,
       imageUrl: ( imageUrl.value.length > 0 ) ? imageUrl.value : undefined,
@@ -57,6 +57,7 @@ export const UpdateCoursePage = () => {
       startDate: new Date( startDate.value ).toISOString(),
       endDate: new Date( endDate.value ).toISOString()
     } )
+    if ( !isUpdated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'El curso se ha actualizado correctamente',

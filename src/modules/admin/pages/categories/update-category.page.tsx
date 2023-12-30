@@ -38,11 +38,12 @@ export const UpdateCategoryPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { categoryName, details, imageUrl } = event.target as HTMLFormElement
-    await update( id, {
+    const isUpdated = await update( id, {
       name: categoryName.value,
       details: details.value,
       imageUrl: imageUrl.value
     } )
+    if ( !isUpdated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'La categoria se ha actualizado correctamente',

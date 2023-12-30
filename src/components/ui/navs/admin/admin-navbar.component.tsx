@@ -43,6 +43,10 @@ const menuData : IMenuItem[] = [
         link: '/courses',
       },
     ]
+  },
+  {
+    title: 'Usuarios',
+    link: '/users',
   }
 ]
 

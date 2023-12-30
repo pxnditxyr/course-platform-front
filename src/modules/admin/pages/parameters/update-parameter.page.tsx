@@ -26,7 +26,8 @@ export const UpdateParameterPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { parameterName, details } = event.target as HTMLFormElement
-    await update( id, { name: parameterName.value, details: details.value })
+    const isUpdated = await update( id, { name: parameterName.value, details: details.value })
+    if ( !isUpdated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'El parametro se ha actualizado correctamente',

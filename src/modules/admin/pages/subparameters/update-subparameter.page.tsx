@@ -29,11 +29,12 @@ export const UpdateSubparameterPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { subparameterName, details, parameterId } = event.target as HTMLFormElement
-    await update( id, {
+    const isUpdated = await update( id, {
       name: subparameterName.value,
       details: details.value,
       parameterId: parameterId.value
     })
+    if ( !isUpdated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'El subparametro se ha actualizado correctamente',

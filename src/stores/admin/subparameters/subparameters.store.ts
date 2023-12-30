@@ -10,8 +10,8 @@ export interface ISubparametersState {
 
   findAll:      () => Promise<void>
   findOne:      ( id : string ) => Promise<void>
-  create:       ( createDto : ICreateSubparameters ) => Promise<void>
-  update:       ( id : string, updateDto : ICreateSubparameters ) => Promise<void>
+  create:       ( createDto : ICreateSubparameters ) => Promise<boolean>
+  update:       ( id : string, updateDto : ICreateSubparameters ) => Promise<boolean>
   toggleStatus: ( id : string ) => Promise<void>
   clearError:   () => void
 }
@@ -42,17 +42,23 @@ const SubparametersStore : StateCreator<ISubparametersState> = ( set, get ) => (
   create: async ( createDto : ICreateSubparameters ) => {
     set({ isLoading: true })
     const subparameter = await SubparametersService.create( createDto )
-    if ( 'error' in subparameter ) set({ error: subparameter.error })
-    else set({ subparameters: [ ...get().subparameters, subparameter ] })
-    set({ isLoading: false })
+    if ( 'error' in subparameter ) {
+      set({ error: subparameter.error, isLoading: false })
+      return false
+    }
+    set({ subparameters: [ ...get().subparameters, subparameter ], isLoading: false })
+    return true
   },
 
   update: async ( id : string, updateDto : ICreateSubparameters ) => {
     set({ isLoading: true })
     const subparameter = await SubparametersService.update( id, updateDto )
-    if ( 'error' in subparameter ) set({ error: subparameter.error })
-    else set({ subparameters: get().subparameters.map( p => p.id === subparameter.id ? subparameter : p ) })
-    set({ isLoading: false })
+    if ( 'error' in subparameter ) {
+      set({ error: subparameter.error, isLoading: false })
+      return false
+    }
+    set({ subparameters: get().subparameters.map( p => p.id === subparameter.id ? subparameter : p ), isLoading: false })
+    return true
   },
 
   toggleStatus: async ( id : string ) => {

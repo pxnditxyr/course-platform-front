@@ -20,11 +20,12 @@ export const CreateSubparameterPage = () => {
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
     const { subparameterName, details, parameterId } = event.target as HTMLFormElement
-    await create({
+    const isCreated = await create({
       name: subparameterName.value,
       details: details.value,
       parameterId: parameterId.value
     })
+    if ( !isCreated ) return
     Swal.fire({
       title: 'Exito!',
       text: 'El subparametro se ha creado correctamente',

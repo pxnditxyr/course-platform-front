@@ -10,8 +10,8 @@ export interface ICategoriesState {
 
   findAll:      () => Promise<void>
   findOne:      ( id : string ) => Promise<void>
-  create:       ( createDto : ICreateCategories ) => Promise<void>
-  update:       ( id : string, updateDto : ICreateCategories ) => Promise<void>
+  create:       ( createDto : ICreateCategories ) => Promise<boolean>
+  update:       ( id : string, updateDto : ICreateCategories ) => Promise<boolean>
   toggleStatus: ( id : string ) => Promise<void>
   clearError:   () => void
 }
@@ -43,17 +43,23 @@ const CategoriesStore : StateCreator<ICategoriesState> = ( set, get ) => ({
   create: async ( createDto : ICreateCategories ) => {
     set({ isLoading: true })
     const category = await CategoriesService.create( createDto )
-    if ( 'error' in category ) set({ error: category.error })
-    else set({ categories: [ ...get().categories, category ] })
-    set({ isLoading: false })
+    if ( 'error' in category ) {
+      set({ error: category.error, isLoading: false })
+      return false
+    }
+    set({ categories: [ ...get().categories, category ], isLoading: false })
+    return true
   },
 
   update: async ( id : string, updateDto : ICreateCategories ) => {
     set({ isLoading: true })
     const category = await CategoriesService.update( id, updateDto )
-    if ( 'error' in category ) set({ error: category.error })
-    else set({ categories: get().categories.map( p => p.id === category.id ? category : p ) })
-    set({ isLoading: false })
+    if ( 'error' in category ) {
+      set({ error: category.error, isLoading: false })
+      return false
+    }
+    set({ categories: get().categories.map( p => p.id === category.id ? category : p ), isLoading: false })
+    return true
   },
 
   toggleStatus: async ( id : string ) => {
