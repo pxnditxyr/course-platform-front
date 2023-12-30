@@ -34,6 +34,7 @@ const CategoriesStore : StateCreator<ICategoriesState> = ( set, get ) => ({
   findOne: async ( id : string ) => {
     set({ isLoading: true })
     const category = await CategoriesService.findOne( id )
+    console.log({ category })
     if ( 'error' in category ) set({ error: category.error })
     else set({ category })
     set({ isLoading: false })

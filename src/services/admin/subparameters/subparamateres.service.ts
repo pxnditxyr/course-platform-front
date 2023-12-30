@@ -19,17 +19,9 @@ export class SubparametersService {
   }
 
   static findOne = async ( id : string ) : Promise<ISubparameter | IServiceError> => {
+    if ( !id ) return { error: 'No id provided' }
     try {
       const { data } = await api.get( `/subparameters/${ id }` )
-      return data
-    } catch ( error ) {
-      return { error: formatApiErrors( error ) }
-    }
-  }
-
-  static findOneByName = async ( name : string ) : Promise<ISubparameter | IServiceError> => {
-    try {
-      const { data } = await api.get( `/subparameters/name/${ name }` )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }

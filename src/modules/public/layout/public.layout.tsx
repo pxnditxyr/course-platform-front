@@ -10,7 +10,7 @@ export const PublicLayout = ( { children, title } : IPublicLayoutProps ) => {
   return (
     <div className="w-full h-full flex flex-col items-center gap-4">
       <PublicNavbar />
-      <div className="w-full h-full">
+      <div className="w-full h-full py-4">
         <h1 className="text-4xl font-bold text-center"> { ( title ) ? title : 'Kantuta Group S.C.' } </h1>
       </div>
       <div className="w-full h-full flex flex-col items-center gap-12">

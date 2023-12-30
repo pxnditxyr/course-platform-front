@@ -19,18 +19,11 @@ export class CategoriesService {
   }
 
   static findOne = async ( id : string ) : Promise<ICategory | IServiceError> => {
+    if ( !id ) return { error: 'No id provided' }
     try {
-      const { data } = await api.get( `/categories/${ id }` )
-      return data
-    } catch ( error ) {
-      return { error: formatApiErrors( error ) }
-    }
-  }
-
-  static findOneByName = async ( name : string ) : Promise<ICategory | IServiceError> => {
-    try {
-      const { data } = await api.get( `/categories/name/${ name }` )
-      return data
+      const response = await api.get( `/categories/${ id }` )
+      console.log({ response })
+      return response.data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
     }

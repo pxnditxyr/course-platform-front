@@ -24,17 +24,9 @@ export class CoursesService {
   }
 
   static findOne = async ( id : string ) : Promise<ICourse | IServiceError> => {
+    if ( !id ) return { error: 'No id provided' }
     try {
       const { data } = await api.get( `/courses/${ id }` )
-      return data
-    } catch ( error ) {
-      return { error: formatApiErrors( error ) }
-    }
-  }
-
-  static findOneByName = async ( name : string ) : Promise<ICourse | IServiceError> => {
-    try {
-      const { data } = await api.get( `/courses/name/${ name }` )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
