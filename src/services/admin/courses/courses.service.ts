@@ -1,62 +1,69 @@
 import { api } from '../../../api'
-import { ISubparameter, IServiceError } from '../../../interfaces'
+import { ICourse, IServiceError } from '../../../interfaces'
 import { formatApiErrors } from '../../../utils'
 
-export interface ICreateSubparameters {
+export interface ICreateCourses {
   name: string
   details: string
-  parameterId: string
+  imageUrl?: string
+  categoryId: string
+  city: string
+  version: string
+  startDate: string
+  endDate: string
 }
 
-export class SubparametersService {
-  static findAll = async () : Promise<ISubparameter[] | IServiceError> => {
+export class CoursesService {
+  static findAll = async () : Promise<ICourse[] | IServiceError> => {
     try {
-      const { data } = await api.get( '/subparameters' )
+      const { data } = await api.get( '/courses' )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
     }
   }
 
-  static findOne = async ( id : string ) : Promise<ISubparameter | IServiceError> => {
+  static findOne = async ( id : string ) : Promise<ICourse | IServiceError> => {
     try {
-      const { data } = await api.get( `/subparameters/${ id }` )
+      const { data } = await api.get( `/courses/${ id }` )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
     }
   }
 
-  static findOneByName = async ( name : string ) : Promise<ISubparameter | IServiceError> => {
+  static findOneByName = async ( name : string ) : Promise<ICourse | IServiceError> => {
     try {
-      const { data } = await api.get( `/subparameters/name/${ name }` )
+      const { data } = await api.get( `/courses/name/${ name }` )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
     }
   }
 
-  static create = async ( createDto : ICreateSubparameters ) : Promise<ISubparameter | IServiceError> => {
+  static create = async ( createDto : ICreateCourses ) : Promise<ICourse | IServiceError> => {
     try {
-      const { data } = await api.post( '/subparameters', createDto )
-      return data
+      const response = await api.post( '/courses', createDto )
+      console.log( response )
+      return response.data
     } catch ( error ) {
+      console.log({ error })
       return { error: formatApiErrors( error ) }
     }
   }
   
-  static update = async ( id : string, updateDto : ICreateSubparameters ) : Promise<ISubparameter | IServiceError> => {
+  static update = async ( id : string, updateDto : ICreateCourses ) : Promise<ICourse | IServiceError> => {
     try {
-      const { data } = await api.patch( `/subparameters/${ id }`, updateDto )
+      const { data } = await api.patch( `/courses/${ id }`, updateDto )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }
     }
   }
 
-  static toggleStatus = async ( id : string ) : Promise<ISubparameter | IServiceError> => {
+  static toggleStatus = async ( id : string ) : Promise<ICourse | IServiceError> => {
     try {
-      const { data } = await api.delete( `/subparameters/${ id }` )
+      const { data } = await api.delete( `/courses/${ id }` )
       return data
     } catch ( error ) {
       return { error: formatApiErrors( error ) }

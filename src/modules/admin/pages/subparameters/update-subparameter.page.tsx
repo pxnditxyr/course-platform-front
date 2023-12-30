@@ -10,27 +10,21 @@ import { LoadingPage, UnexpectedErrorPage } from '../../../../components'
 export const UpdateSubparameterPage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
+
   const update = useSubparametersStore( state => state.update )
   const subparameters = useSubparametersStore( state => state.subparameters )
-
-  const subparameter = subparameters.find( subparameter => subparameter.id === id )
-  if ( !subparameter ) return (
-    <UnexpectedErrorPage
-      title="Subparametro no encontrado"
-      message="El subparametro que estas buscando no existe"
-    />
-  )
-
+  const findAllSubparameters = useSubparametersStore( state => state.findAll )
   const parameters = useParametersStore( state => state.parameters )
   const findAllParameters = useParametersStore( state => state.findAll )
-  useEffect( () => {
-    findAllParameters()
-  }, [] )
-
   const isLoading = useSubparametersStore( state => state.isLoading )
   const error = useSubparametersStore( state => state.error )
   const clearError = useSubparametersStore( state => state.clearError )
+  const subparameter = subparameters.find( subparameter => subparameter.id === id )
 
+  useEffect( () => {
+    findAllParameters()
+    findAllSubparameters()
+  }, [] )
 
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
@@ -60,6 +54,12 @@ export const UpdateSubparameterPage = () => {
   }, [ error ] )
 
   if ( isLoading ) return ( <LoadingPage /> )
+  if ( !subparameter ) return (
+    <UnexpectedErrorPage
+      title="Subparametro no encontrado"
+      message="El subparametro que estas buscando no existe"
+    />
+  )
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">

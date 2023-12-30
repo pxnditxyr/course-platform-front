@@ -9,21 +9,22 @@ import { serializeDate } from '../../../../utils'
 export const ViewParameterPage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
+
   const parameters = useParametersStore( state => state.parameters )
-  const parameter = parameters.find( parameter => parameter.id === id )
-
-  if ( !parameter ) return (
-    <UnexpectedErrorPage
-      title="Parametro no encontrado"
-      message="El parametro que estas buscando no existe"
-    />
-  )
-
+  const findAll = useParametersStore( state => state.findAll )
   const isLoading = useParametersStore( state => state.isLoading )
   const error = useParametersStore( state => state.error )
   const clearError = useParametersStore( state => state.clearError )
+
   const navigate = useNavigate()
   const toggleStatus = useParametersStore( state => state.toggleStatus )
+  const onEditClick   = ( id : string ) => navigate( `/parameters/edit/${ btoa( id ) }` )
+  const onDeleteClick = ( id : string ) => toggleStatus( id )
+  const parameter = parameters.find( parameter => parameter.id === id )
+
+  useEffect( () => {
+    findAll()
+  }, [] )
 
   useEffect( () => {
     if ( error ) {
@@ -38,9 +39,12 @@ export const ViewParameterPage = () => {
   }, [ error ] )
 
   if ( isLoading ) return ( <LoadingPage /> )
-  const onEditClick   = ( id : string ) => navigate( `/parameters/edit/${ btoa( id ) }` )
-  const onDeleteClick = ( id : string ) => toggleStatus( id )
-
+  if ( !parameter ) return (
+    <UnexpectedErrorPage
+      title="Parametro no encontrado"
+      message="El parametro que estas buscando no existe"
+    />
+  )
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">
       <h1 className="text-3xl font-bold"> Ver Parametro </h1>

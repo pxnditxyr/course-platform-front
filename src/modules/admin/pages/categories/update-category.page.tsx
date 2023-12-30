@@ -12,20 +12,28 @@ export const UpdateCategoryPage = () => {
   const id = atob( location.pathname.split( '/' )[ 3 ] )
   const update = useCategoriesStore( state => state.update )
   const categories = useCategoriesStore( state => state.categories )
-
-  const category = categories.find( category => category.id === id )
-
-  if ( !category ) return (
-    <UnexpectedErrorPage
-      title="Categoria no encontrada"
-      message="La categoria que estas buscando no existe"
-    />
-  )
-
+  const findAll = useCategoriesStore( state => state.findAll )
   const isLoading = useCategoriesStore( state => state.isLoading )
   const error = useCategoriesStore( state => state.error )
   const clearError = useCategoriesStore( state => state.clearError )
 
+  const category = categories.find( category => category.id === id )
+
+  useEffect( () => {
+    findAll()
+  }, [] )
+  
+  useEffect( () => {
+    if ( error ) {
+      Swal.fire({
+        title: 'Error!',
+        text: error,
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      })
+      clearError()
+    }
+  }, [ error ] )
 
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
@@ -42,19 +50,14 @@ export const UpdateCategoryPage = () => {
       confirmButtonText: 'Ok'
     })
   }
-  useEffect( () => {
-    if ( error ) {
-      Swal.fire({
-        title: 'Error!',
-        text: error,
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      })
-      clearError()
-    }
-  }, [ error ] )
 
   if ( isLoading ) return ( <LoadingPage /> )
+  if ( !category ) return (
+    <UnexpectedErrorPage
+      title="Categoria no encontrada"
+      message="La categoria que estas buscando no existe"
+    />
+  )
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">

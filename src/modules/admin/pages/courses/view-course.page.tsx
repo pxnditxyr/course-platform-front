@@ -2,27 +2,28 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-import { useCategoriesStore } from '../../../../stores'
+import { useCoursesStore } from '../../../../stores'
 import { LoadingPage, SimpleCard, UnexpectedErrorPage } from '../../../../components'
 import { serializeDate } from '../../../../utils'
 
-export const ViewCategoryPage = () => {
+export const ViewCoursePage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
-  const categories = useCategoriesStore( state => state.categories )
-  const findAll = useCategoriesStore( state => state.findAll )
-  const isLoading = useCategoriesStore( state => state.isLoading )
-  const error = useCategoriesStore( state => state.error )
-  const clearError = useCategoriesStore( state => state.clearError )
 
+  const courses = useCoursesStore( state => state.courses )
+  const findAllCourses = useCoursesStore( state => state.findAll )
+  const isLoading = useCoursesStore( state => state.isLoading )
+  const error = useCoursesStore( state => state.error )
+  const clearError = useCoursesStore( state => state.clearError )
   const navigate = useNavigate()
-  const toggleStatus = useCategoriesStore( state => state.toggleStatus )
-  const onEditClick   = ( id : string ) => navigate( `/categories/edit/${ btoa( id ) }` )
+  const toggleStatus = useCoursesStore( state => state.toggleStatus )
+  const course = courses.find( course => course.id === id )
+
+  const onEditClick   = ( id : string ) => navigate( `/courses/edit/${ btoa( id ) }` )
   const onDeleteClick = ( id : string ) => toggleStatus( id )
-  const category = categories.find( category => category.id === id )
 
   useEffect( () => {
-    findAll()
+    findAllCourses()
   }, [] )
 
   useEffect( () => {
@@ -37,17 +38,18 @@ export const ViewCategoryPage = () => {
     }
   }, [ error ] )
 
+
   if ( isLoading ) return ( <LoadingPage /> )
-  if ( !category ) return (
+  if ( !course ) return (
     <UnexpectedErrorPage
-      title="Categoria no encontrada"
-      message="La categoria que estas buscando no existe"
+      title="Curso no encontrado"
+      message="El curso que intentas ver no existe"
     />
   )
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">
-      <h1 className="text-3xl font-bold"> Ver Categoria </h1>
+      <h1 className="text-3xl font-bold"> Ver Curso </h1>
       <div className="flex flex-col gap-4 w-full items-center mb-8">
         <SimpleCard
           headerKeys={ [ 'name' ] }
@@ -55,11 +57,11 @@ export const ViewCategoryPage = () => {
           bodyKeys={ [ 'details', 'createdAt', 'updatedAt', 'creator', 'updater' ] }
           bodyTitles={ [ 'Detalles', 'Fecha de creacion', 'Fecha de actualizacion', 'Creado por', 'Actualizado por' ] }
           data={ {
-            ...category,
-            createdAt: serializeDate( category.createdAt ),
-            updatedAt: serializeDate( category.updatedAt ),
-            creator: `${ category.creator?.name } - ${ category.creator?.email }`,
-            updater: category.updater ? `${ category.updater?.name } - ${ category.updater?.email }` : 'No se ha actualizado',
+            ...course,
+            createdAt: serializeDate( course.createdAt ),
+            updatedAt: serializeDate( course.updatedAt ),
+            creator: `${ course.creator?.name } - ${ course.creator?.email }`,
+            updater: course.updater ? `${ course.updater?.name } - ${ course.updater?.email }` : 'No se ha actualizado',
           } }
           hasImage
           imageKey="imageUrl"

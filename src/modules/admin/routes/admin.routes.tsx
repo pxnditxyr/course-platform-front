@@ -5,6 +5,7 @@ import {
   CreateParameterPage, ListParametersPage, UpdateParameterPage, ViewParameterPage,
   CreateSubparameterPage, ListSubparametersPage, UpdateSubparameterPage, ViewSubparameterPage,
   CreateCategoryPage, ListCategoriesPage, UpdateCategoryPage, ViewCategoryPage,
+  ListCoursesPage, CreateCoursePage, ViewCoursePage, UpdateCoursePage,
 } from '../pages'
 
 export const AdminRoutes = () => {
@@ -35,6 +36,14 @@ export const AdminRoutes = () => {
               <Route path="create" element={ <CreateCategoryPage /> } />
               <Route path="view/:id" element={ <ViewCategoryPage /> } />
               <Route path="edit/:id" element={ <UpdateCategoryPage /> } />
+            </Routes>
+          } />
+          <Route path="courses/*" element={
+            <Routes>
+              <Route path="/" element={ <ListCoursesPage /> } />
+              <Route path="create" element={ <CreateCoursePage /> } />
+              <Route path="view/:id" element={ <ViewCoursePage /> } />
+              <Route path="edit/:id" element={ <UpdateCoursePage /> } />
             </Routes>
           } />
           <Route path="/auth/*" element={ <Navigate to="/" /> } />

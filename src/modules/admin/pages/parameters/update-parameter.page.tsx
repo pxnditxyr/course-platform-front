@@ -10,22 +10,18 @@ import { LoadingPage, UnexpectedErrorPage } from '../../../../components'
 export const UpdateParameterPage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
+
   const update = useParametersStore( state => state.update )
   const parameters = useParametersStore( state => state.parameters )
-
-  const parameter = parameters.find( parameter => parameter.id === id )
-
-  if ( !parameter ) return (
-    <UnexpectedErrorPage
-      title="Parametro no encontrado"
-      message="El parametro que estas buscando no existe"
-    />
-  )
-
+  const findAll = useParametersStore( state => state.findAll )
   const isLoading = useParametersStore( state => state.isLoading )
   const error = useParametersStore( state => state.error )
   const clearError = useParametersStore( state => state.clearError )
+  const parameter = parameters.find( parameter => parameter.id === id )
 
+  useEffect( () => {
+    findAll()
+  }, [] )
 
   const onSubmit = async ( event : FormEvent<HTMLFormElement> ) => {
     event.preventDefault()
@@ -38,6 +34,7 @@ export const UpdateParameterPage = () => {
       confirmButtonText: 'Ok'
     })
   }
+
   useEffect( () => {
     if ( error ) {
       Swal.fire({
@@ -51,6 +48,12 @@ export const UpdateParameterPage = () => {
   }, [ error ] )
 
   if ( isLoading ) return ( <LoadingPage /> )
+  if ( !parameter ) return (
+    <UnexpectedErrorPage
+      title="Parametro no encontrado"
+      message="El parametro que estas buscando no existe"
+    />
+  )
 
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">

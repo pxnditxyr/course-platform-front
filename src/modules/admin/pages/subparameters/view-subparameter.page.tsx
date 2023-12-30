@@ -9,21 +9,22 @@ import { serializeDate } from '../../../../utils'
 export const ViewSubparameterPage = () => {
   const location = useLocation()
   const id = atob( location.pathname.split( '/' )[ 3 ] )
+
   const subparameters = useSubparametersStore( state => state.subparameters )
-  const subparameter = subparameters.find( subparameter => subparameter.id === id )
-
-  if ( !subparameter ) return (
-    <UnexpectedErrorPage
-      title="Subparametro no encontrado"
-      message="El subparametro que estas buscando no existe"
-    />
-  )
-
+  const findAllSubparameters = useSubparametersStore( state => state.findAll )
   const isLoading = useSubparametersStore( state => state.isLoading )
   const error = useSubparametersStore( state => state.error )
   const clearError = useSubparametersStore( state => state.clearError )
+
   const navigate = useNavigate()
   const toggleStatus = useSubparametersStore( state => state.toggleStatus )
+  const onEditClick   = ( id : string ) => navigate( `/subparameters/edit/${ btoa( id ) }` )
+  const onDeleteClick = ( id : string ) => toggleStatus( id )
+  const subparameter = subparameters.find( subparameter => subparameter.id === id )
+
+  useEffect( () => {
+    findAllSubparameters()
+  }, [] )
 
   useEffect( () => {
     if ( error ) {
@@ -38,9 +39,12 @@ export const ViewSubparameterPage = () => {
   }, [ error ] )
 
   if ( isLoading ) return ( <LoadingPage /> )
-  const onEditClick   = ( id : string ) => navigate( `/subparameters/edit/${ btoa( id ) }` )
-  const onDeleteClick = ( id : string ) => toggleStatus( id )
-
+  if ( !subparameter ) return (
+    <UnexpectedErrorPage
+      title="Subparametro no encontrado"
+      message="El subparametro que estas buscando no existe"
+    />
+  )
   return (
     <div className="flex flex-col items-center gap-12 py-2 px-12 w-full">
       <h1 className="text-3xl font-bold"> Ver Subparametro </h1>
