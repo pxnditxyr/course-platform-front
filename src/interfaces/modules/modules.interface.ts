@@ -23,8 +23,8 @@ export interface ICourse {
   categoryId: string
   city: string
   version: string
-  startDate: Date
-  endDate: Date
+  startDate: string
+  endDate: string
   imageUrl?: string | null
   status: boolean
   createdAt: string
@@ -217,7 +217,7 @@ export interface IPersonalInfo {
   userId: string
   ciExtensionId: string
   genderId: string
-  birthDate: Date
+  birthDate: string
   nationality: string
   status: boolean
   createdAt: string
@@ -231,4 +231,25 @@ export interface IPersonalInfo {
 
   ciExtension?: ISubparameter | null
   gender?: ISubparameter | null
+}
+
+export interface IWorkInfo {
+  id: string
+  userId: string
+  profession: string
+  professionLevelId: string
+  institutionTitle: string
+  jobAddress: string
+  position: string
+  status: boolean
+  createdAt: string
+  createdBy?: string | null
+  updatedAt: string
+  updatedBy?: string | null
+    
+  user?: IUser | null
+  creator?: IUser | null
+  updater?: IUser | null
+
+  professionLevel?: ISubparameter | null
 }

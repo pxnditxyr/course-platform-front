@@ -18,7 +18,7 @@ const kantutaIcon = '/images/icon.jpeg'
 export const SimpleCard = ( { headerKeys, headerTitles, bodyKeys, bodyTitles, data, onEditClick, onDeleteClick, hasImage, imageKey } : IProps ) => {
 
   return (
-    <Card className="md:min-w-[400px]">
+    <Card className="md:min-w-[400px] h-auto">
       <CardHeader className="flex gap-6 py-4 px-8">
         <Image
           alt="kantuta logo"

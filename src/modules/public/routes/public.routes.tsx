@@ -18,7 +18,13 @@ export const PublicRoutes = () => {
         <Route path="parameters/*" element={ <Navigate to="/auth/signin" /> } />
         <Route path="subparameters/*" element={ <Navigate to="/auth/signin" /> } />
         <Route path="dashboard/*" element={ <Navigate to="/auth/signin" /> } />
+        <Route path="users/*" element={ <Navigate to="/auth/signin" /> } />
+        <Route path="profile/*" element={ <Navigate to="/auth/signin" /> } />
         <Route path="*" element={ <Simple404Page /> } />
+
+        <Route path="my-courses" element={ <Navigate to="/auth/signin" /> } />
+        <Route path="profile" element={ <Navigate to="/auth/signin" /> } />
+        <Route path="my-data" element={ <Navigate to="/auth/signin" /> } />
       </Routes>
     </div>
   )

@@ -8,12 +8,13 @@ export interface IParametersState {
   isLoading:  boolean
   error?:     string
 
-  findAll:      () => Promise<void>
-  findOne:      ( id : string ) => Promise<void>
-  create:       ( createDto : ICreateParameters ) => Promise<boolean>
-  update:       ( id : string, updateDto : ICreateParameters ) => Promise<boolean>
-  toggleStatus: ( id : string ) => Promise<void>
-  clearError:   () => void
+  findAll:       () => Promise<void>
+  findOne:       ( id : string ) => Promise<void>
+  findOneByName: ( name : string ) => Promise<void>
+  create:        ( createDto : ICreateParameters ) => Promise<boolean>
+  update:        ( id : string, updateDto : ICreateParameters ) => Promise<boolean>
+  toggleStatus:  ( id : string ) => Promise<void>
+  clearError:    () => void
 }
 
 
@@ -34,6 +35,14 @@ const ParametersStore : StateCreator<IParametersState> = ( set, get ) => ({
   findOne: async ( id : string ) => {
     set({ isLoading: true })
     const parameter = await ParametersService.findOne( id )
+    if ( 'error' in parameter ) set({ error: parameter.error })
+    else set({ parameter })
+    set({ isLoading: false })
+  },
+
+  findOneByName: async ( name : string ) => {
+    set({ isLoading: true })
+    const parameter = await ParametersService.findOneByName( name )
     if ( 'error' in parameter ) set({ error: parameter.error })
     else set({ parameter })
     set({ isLoading: false })

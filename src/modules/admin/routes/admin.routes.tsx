@@ -55,6 +55,7 @@ export const AdminRoutes = () => {
               <Route path="edit/:id" element={ <UpdateUserPage /> } />
             </Routes>
           } />
+          <Route path="dashboard" element={ <DashboardPage /> } />
           <Route path="/auth/*" element={ <Navigate to="/" /> } />
         </Routes>
       </AdminLayout>

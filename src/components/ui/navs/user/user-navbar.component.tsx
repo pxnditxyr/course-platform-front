@@ -13,48 +13,25 @@ interface IMenuItem {
 
 const menuData : IMenuItem[] = [
   {
-    title: 'Dashboard',
-    link: '/',
+    title: 'Home',
+    link: '/'
   },
   {
-    title: 'Parametricas',
-    isDropdown: true,
-    subItems: [
-      {
-        title: 'Parametros',
-        link: '/parameters',
-      },
-      {
-        title: 'Subparametros',
-        link: '/subparameters',
-      },
-    ]
+    title: 'Todos los cursos',
+    link: '/courses'
   },
   {
-    title: 'Cursos',
-    isDropdown: true,
-    subItems: [
-      {
-        title: 'Categorias',
-        link: '/categories',
-      },
-      {
-        title: 'Cursos',
-        link: '/courses',
-      },
-    ]
+    title: 'Noticias',
+    link: '/news'
   },
   {
-    title: 'Usuarios',
-    link: '/users',
-  }
+    title: 'Contactanos',
+    link: '/contact'
+  },
 ]
 
-interface IAdminNavbarProps {
-  title?: string
-}
+export const UserNavbar = () => {
 
-export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
   const user = useAuthStore( state => state.user )
   const signout = useAuthStore( state => state.signout )
   const [ isMenuOpen, setIsMenuOpen ] = useState<boolean>( false )
@@ -67,15 +44,26 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
       onMenuOpenChange={ setIsMenuOpen }
       maxWidth="full"
       isMenuOpen={ isMenuOpen }
+      className="py-4"
     >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={ isMenuOpen ? "Cerrar Menu" : "Abrir Menu" }
           className="sm:hidden"
         />
-        <NavbarBrand>
-          <p className="font-bold text-inherit"> { title || 'Admin' } </p>
-        </NavbarBrand>
+        <NavbarBrand className="flex gap-4 items-center">
+        <div
+          style={{
+            backgroundImage: 'url(/images/icon.jpeg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            width: '90px',
+            height: '40px',
+            borderRadius: '10px',
+          }}
+        ></div>
+        <p className="font-bold text-inherit hidden lg:block"> Kantuta Group S.C. </p>
+      </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -135,6 +123,12 @@ export const AdminNavbar = ( { title } : IAdminNavbarProps ) => {
             </DropdownItem>
             <DropdownItem key="profile" onClick={ () => navigate( '/profile' ) } >
               Mi perfil
+            </DropdownItem>
+            <DropdownItem key="profile" onClick={ () => navigate( '/my-courses' ) } >
+              Mis Cursos
+            </DropdownItem>
+            <DropdownItem key="profile" onClick={ () => navigate( '/my-data' ) } >
+              Mis Datos
             </DropdownItem>
             <DropdownItem key="signout" color="danger" onClick={ signout }>
               Cerrar sesión

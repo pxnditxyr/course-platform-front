@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AuthLayout } from '..'
 import { Button, Input } from '@nextui-org/react'
 import { EyeFilledIcon, EyeSlashFilledIcon } from '../icons';
+import { Link } from 'react-router-dom';
 
 export const SignupPage = () => {
 
@@ -10,9 +11,9 @@ export const SignupPage = () => {
 
   return (
     <AuthLayout title="Registrarse">
-      <div className="flex flex-col items-center gap-8 py-8">
+      <div className="flex flex-col items-center gap-8 min-w-[350px]">
         <form className="flex flex-col items-center w-full gap-8 py-4">
-          <div className="flex items-center w-full gap-8 py-4">
+          <div className="flex flex-col items-center w-full gap-8 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
             <Input
               isClearable
               type="email"
@@ -39,7 +40,7 @@ export const SignupPage = () => {
               className="max-w-xs"
             />
           </div>
-          <div className="flex items-center w-full gap-8 py-4">
+          <div className="flex flex-col items-center w-full gap-8 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
             <Input
               isClearable
               type="text"
@@ -59,7 +60,7 @@ export const SignupPage = () => {
               className="max-w-xs"
             />
           </div>
-          <div className="flex items-center w-full gap-8 py-4">
+          <div className="flex flex-col items-center w-full gap-8 py-4 md:flex-row md:items-center md:justify-between md:gap-8">
             <Input
               isClearable
               type="text"
@@ -83,6 +84,9 @@ export const SignupPage = () => {
             Iniciar Sesión
           </Button>  
         </form>
+        <Link to="/auth/signin" className="text-fuchsia-600 font-bold text-md hover:underline">
+          ¿Ya tienes una cuenta? Inicia sesión
+        </Link>
       </div>
     </AuthLayout>
   )

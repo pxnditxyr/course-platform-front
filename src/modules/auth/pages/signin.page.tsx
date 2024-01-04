@@ -5,6 +5,7 @@ import { EyeFilledIcon, EyeSlashFilledIcon } from '../icons'
 import { useAuthStore } from '../../../stores'
 import { VioletModal } from '../../../components'
 import { useModal, useShowPassword } from '../../../hooks'
+import { Link } from 'react-router-dom'
 
 export const SigninPage = () => {
 
@@ -27,7 +28,7 @@ export const SigninPage = () => {
 
   return (
     <AuthLayout title="Iniciar Sesión">
-      <div className="flex flex-col items-center gap-8 py-8">
+      <div className="flex flex-col items-center gap-8 py-8 min-w-[350px]">
         <form
           className="flex flex-col items-center w-full gap-8 py-4"
           onSubmit={ onSubmit }
@@ -66,6 +67,9 @@ export const SigninPage = () => {
             Iniciar Sesión
           </Button>  
         </form>
+        <Link to="/auth/signup" className="text-fuchsia-600 font-bold text-md hover:underline">
+          ¿No tienes cuenta? Regístrate aquí
+        </Link>
         <VioletModal
           isOpen={ isOpenModal }
           onOpenChange={ onCloseModal }
